@@ -1,0 +1,67 @@
+log_dir: /tmp/test 
+cluster: True
+dataset:
+    name: CUB
+    root: '/tmp/CUB_200_2011/images'
+    train_split: 'data/finegrainedwiki/xlsa17/data/CUB/trainvalclasses.txt'
+    eval_split: 'data/finegrainedwiki/xlsa17/data/CUB/testclasses.txt'
+    articles: data/finegrainedwiki/articles/cub.pkl
+    filelist: data/finegrainedwiki/xlsa17/data/CUB/res101.mat
+    split_file: 'data/finegrainedwiki/xlsa17/data/CUB/att_splits.mat'
+    # name: AWA
+    # root: '/tmp/Animals_with_Attributes2/JPEGImages'
+    # train_split: 'data/finegrainedwiki/xlsa17/data/AWA2/trainvalclasses.txt'
+    # eval_split: 'data/finegrainedwiki/xlsa17/data/AWA2/testclasses.txt'
+    # articles: data/finegrainedwiki/articles/awa.pkl
+    # filelist: data/finegrainedwiki/xlsa17/data/AWA2/res101.mat
+    # split_file: 'data/finegrainedwiki/xlsa17/data/AWA2/att_splits.mat'
+    # name: FLO
+    # root: '/tmp/FLO/'
+    # train_split: 'data/finegrainedwiki/xlsa17/data/FLO/trainvalclasses.txt'
+    # eval_split: 'data/finegrainedwiki/xlsa17/data/FLO/testclasses.txt'
+    # articles: data/finegrainedwiki/articles/flo.pkl
+    # filelist: data/finegrainedwiki/xlsa17/data/FLO/flo_vit.mat
+    # split_file: 'data/finegrainedwiki/xlsa17/data/FLO/att_splits.mat'
+    emb_dim: 300
+    feat_dim: 768
+    pretrained_feats: False
+    feats_file: /tmp/vit_cub.pkl
+    mode: gzsl
+    num_articles: 4
+    concat: False
+models:
+    name: i2mvformer 
+    image_encoder: 'vit'
+    image_tokens: True
+    glove_path: /tmp/glove_840B_300d.bin 
+    stanza_path: 'pretrained/stanza_resources'
+    resnet_path: 'pretrained/resnet101-5d3b4d8f.pth'
+    text_encoder_path: 'pretrained/longformer'
+    vit_base: 'pretrained/vitbase16_pretrain.pth'
+    text_encoder_path: 'pretrained/longformer'
+    img_layers: 3
+    emb_layers: 2
+    text_encoder: glove_list # 'glove_list'
+    freeze_image: True
+    freeze_image_after: 500000
+    emb_dim: 64
+    transformer_depth: 2
+    heads : 4
+    cls_token: True
+    decode: 1.0
+    lambda_cls: 1.0
+    img_transformer_depth: 0
+    max_pool: False
+    fine_grained_cls: 64
+    pooling_type: 'map'
+    multipool: True
+    includewiki: True
+    positional: False
+    # unseen_calibration: 99
+train:
+    batch_size: 16 #128
+    epochs: 2000
+    lr: 1e-3
+    imagefinetune: False
+    ee_last: False
+    
